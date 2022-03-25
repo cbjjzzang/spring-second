@@ -1,2 +1,2 @@
 ## myFirstBlog
-#### sparta spring 기본주차
+#### sparta spring 2주차
