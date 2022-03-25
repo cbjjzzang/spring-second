@@ -1,6 +1,7 @@
-package com.eungsoo.blog.models;
+package com.sparta.myBlog.models;
 
 
+import com.sparta.myBlog.dto.ContentsRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

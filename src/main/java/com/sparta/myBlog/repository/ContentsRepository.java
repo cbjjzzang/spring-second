@@ -1,6 +1,6 @@
-package com.eungsoo.blog.repository;
+package com.sparta.myBlog.repository;
 
-import com.eungsoo.blog.models.Contents;
+import com.sparta.myBlog.models.Contents;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

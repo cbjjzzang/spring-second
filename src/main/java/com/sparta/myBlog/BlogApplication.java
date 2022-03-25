@@ -1,7 +1,7 @@
-package com.eungsoo.blog;
+package com.sparta.myBlog;
 
-import com.eungsoo.blog.models.Contents;
-import com.eungsoo.blog.repository.ContentsRepository;
+import com.sparta.myBlog.models.Contents;
+import com.sparta.myBlog.repository.ContentsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +19,7 @@ public class BlogApplication {
 
         SpringApplication.run(BlogApplication.class, args);
     }
-
-    //    # main 아래에 삽입
+    //    # main 아래에 삽입 - 타임존 설정
     @PostConstruct
     public void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));

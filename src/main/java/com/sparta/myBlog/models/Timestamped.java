@@ -1,4 +1,4 @@
-package com.eungsoo.blog.models;
+package com.sparta.myBlog.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

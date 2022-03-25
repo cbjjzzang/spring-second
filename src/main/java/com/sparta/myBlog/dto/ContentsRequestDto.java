@@ -1,4 +1,4 @@
-package com.eungsoo.blog.models;
+package com.sparta.myBlog.dto;
 
 import lombok.Getter;
 

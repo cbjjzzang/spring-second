@@ -1,10 +1,9 @@
-package com.eungsoo.blog.controller;
+package com.sparta.myBlog.controller;
 
 
-import com.eungsoo.blog.models.Contents;
-import com.eungsoo.blog.repository.ContentsRepository;
-import com.eungsoo.blog.models.ContentsRequestDto;
-import com.eungsoo.blog.service.ContentsService;
+import com.sparta.myBlog.models.Contents;
+import com.sparta.myBlog.repository.ContentsRepository;
+import com.sparta.myBlog.dto.ContentsRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class ContentsRestController {
 
     private final ContentsRepository ContentsRepository;
-    private final ContentsService ContentsService;
+    private final com.sparta.myBlog.service.ContentsService ContentsService;
 
     // 게시글 전체 조회
     @GetMapping("/api/contents")

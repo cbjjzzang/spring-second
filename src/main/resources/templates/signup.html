@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <title>회원가입 페이지</title>
+    <style>
+        p{color:red; position:absolute; top:290px; left:760px;}
+    </style>
+
+</head>
+<body>
+<div id="login-form">
+    <div id="login-title">Sign up Select Shop</div>
+
+    <form action="/user/signup" method="post">
+        <div class="login-id-label">Username</div>
+        <input type="text" name="username" placeholder="Username" class="login-input-box" id="username">
+
+        <div class="login-id-label">Password</div>
+        <input type="password" name="password" class="login-input-box" id="password">
+
+        <div class="login-id-label">Password</div>
+        <input type="password" name="password2" class="login-input-box" id="password2">
+
+        <div class="login-id-label">E-mail</div>
+        <input type="text" name="email" placeholder="E-mail" class="login-input-box" id="useremail">
+
+        <button id="login-id-submit">회원 가입</button>
+    </form>
+    <p th:text="${message}"></p>
+</div>
+</body>
+</html>

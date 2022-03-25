@@ -1,8 +1,8 @@
-package com.eungsoo.blog.service;
+package com.sparta.myBlog.service;
 
-import com.eungsoo.blog.models.Contents;
-import com.eungsoo.blog.repository.ContentsRepository;
-import com.eungsoo.blog.models.ContentsRequestDto;
+import com.sparta.myBlog.models.Contents;
+import com.sparta.myBlog.repository.ContentsRepository;
+import com.sparta.myBlog.dto.ContentsRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
