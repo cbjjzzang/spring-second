@@ -14,7 +14,12 @@
         $(document).ready(function () {
             getMessages();
             let username = [[${username}]]
-            console.log(username)
+            if(username == null){
+                $('#logout-text').hide();
+            }else{
+                $('#login-text').hide();
+                $('#signup-text').hide();
+            }
         })
 
         function checkuser(){
@@ -127,6 +132,15 @@
         .header {
             margin-top: 170px;
         }
+        .header-a{
+            position:absolute;
+            font-size:30px;
+            color:orange;
+            top:30px;
+        }
+        #signup-text{
+            top:60px;
+        }
 
         .header h2 {
             height: 33px;
@@ -221,8 +235,6 @@
             text-decoration: none;
             color: #000000;
         }
-        #btn2{position:absolute; top:0px; left:170px;}
-        .to-write{position:relative;}
     </style>
 </head>
 
@@ -235,6 +247,9 @@
 </div>
 <div class="wrap">
     <div class="header">
+        <a id="login-text" class='header-a' href="/user/login">로그인</a>
+        <a id="signup-text" class='header-a' href="/user/signup">회원가입</a>
+        <a id="logout-text" class='header-a' href="/user/logout">로그아웃</a>
         <h2>항해99 바다 위 대나무숲<br><br>
             <span th:text="${username}"></span>님 환영합니다!!</h2>
 

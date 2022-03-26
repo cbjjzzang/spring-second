@@ -45,9 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 // 회원 관리 처리 API 전부를 login 없이 허용
                 .antMatchers("/user/**").permitAll()
-
+                // 로그인 안하고 글 보는 기능 허용
                 .antMatchers("/api/contents/**").permitAll()
-
+                // index 페이지 로그인 없이 접속 허용
                 .antMatchers("/").permitAll()
                 // 어떤 요청이든 '인증'
                 .anyRequest().authenticated()
@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그아웃 기능 허용
                     .logout()
                     .logoutUrl("/user/logout")
+                    .logoutSuccessUrl("/")
                     .permitAll();
     }
 }
