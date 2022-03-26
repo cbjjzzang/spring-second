@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if(userDetails == null){
+            return "index";
+        }
         model.addAttribute("username", userDetails.getUsername());
 
         return "index";

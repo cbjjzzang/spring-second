@@ -10,10 +10,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <!--    font-family: 'Jua', sans-serif;-->
-    <script>
+    <script th:inline="javascript">
         $(document).ready(function () {
             getMessages();
+            let username = [[${username}]]
+            console.log(username)
         })
+
+        function checkuser(){
+            let username = [[${username}]]
+            console.log(username)
+            if(username == null){
+                alert('로그인이 필요합니다')
+                window.location.replace('/login.html')
+                return;
+            }
+            window.location.href='write.html';
+        }
 
         // 게시글을 불러옵니다.
         function getMessages() {
@@ -215,6 +228,7 @@
 
 <body>
 <div class="background-header">
+
 </div>
 <div class="background-body">
 
@@ -226,30 +240,10 @@
 
     </div>
     <div class="to-write">
-        <button type="button" class="btn btn-primary" onclick="location.href='write.html'"><b>글 쓰 기</b></button>
-        <button onclick="location.href='/user/logout'" id="btn2">로그아웃</button>
+        <button type="button" class="btn btn-primary" onclick="checkuser()"><b>글 쓰 기</b></button>
     </div>
     <div id="cards-box" class="area-read">
-        <div class="card">
-            <div class="metadata">
-                <div class="date">
-                    October 10, 2020
-                </div>
-                <div class="name">
-                    anonymous
-                </div>
-            </div>
-            <h2>asd</h2>
-            <div class="contents">
-                <div id="1-contents" class="text">
-                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
-                </div>
-                <div id="1-editarea" class="edit">
-                    <textarea id="1-textarea" class="te-edit" name="" cols="30" rows="5"></textarea>
-                </div>
-            </div>
 
-        </div>
     </div>
 </div>
 </body>

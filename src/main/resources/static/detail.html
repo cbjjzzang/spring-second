@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -215,6 +215,42 @@
             font-size: 30px;
             position: absolute;
         }
+        textarea.field {
+            width: 502px !important;
+            height: 40px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            border: none;
+            padding: 18px;
+            resize: none;
+        }
+
+        textarea.field::placeholder {
+            width: 216px;
+            height: 16px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1;
+            letter-spacing: -0.96px;
+            text-align: left;
+            color: #868e96;
+        }
+        .comment {
+            position: relative;
+            width: 538px;
+        }
+
+         .comment img {
+            cursor: pointer;
+            position: absolute;
+            width: 22.2px;
+            height: 18.7px;
+            bottom: 15px;
+            right: 17px;
+        }
     </style>
 
 </head>
@@ -254,6 +290,13 @@
                     <!--  <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>-->
                 </div>
             </div>
+
+        </div>
+
+        <div class="comment">
+            <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+                      rows="10"></textarea>
+            <img src="images/send.png" alt="" onclick="writePost()">
         </div>
     </div>
 </div>
