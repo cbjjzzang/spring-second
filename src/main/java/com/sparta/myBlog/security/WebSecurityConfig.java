@@ -26,12 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/h2-console/**");
-        web
-                .ignoring()
-                .antMatchers("/write.html");
-        web
-                .ignoring()
-                .antMatchers("/detail.html/**");
     }
 
     @Override
@@ -47,8 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").permitAll()
                 // 로그인 안하고 글 보는 기능 허용
                 .antMatchers("/api/contents/**").permitAll()
+
+                .antMatchers("/api/contents/detail").permitAll()
                 // index 페이지 로그인 없이 접속 허용
                 .antMatchers("/").permitAll()
+
                 // 어떤 요청이든 '인증'
                 .anyRequest().authenticated()
                 .and()

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바다 위 대나무 숲</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <!--    font-family: 'Jua', sans-serif;-->
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            getComment();
+            let user = [[${user}]]
+            if(user != null){
+                $('#userlogin').show();
+            }else{
+                $('#userlogin').hide();
+            }
+        })
+
+        function isValidContents(contents) {
+            if (contents == '') {
+                alert('내용을 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+        function writeComment(){
+            let user = [[${user}]]
+            console.log(user)
+            if(user === null){
+                alert("로그인이 필요합니다")
+                window.location.replace('/login.html')
+                return;
+            }
+            let contents = $('#contents').val();
+            let contentsId = [[${data.id}]]
+            if (isValidContents(contents) == false) {
+                return;
+            }
+
+            let data = {'contents': contents, 'contentsId': contentsId};
+            $.ajax({
+                type: "POST",
+                url: "/api/comments",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                    alert('메시지가 성공적으로 작성되었습니다.');
+                    window.location.reload()
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        }
+
+        //comment 가져오기
+        function getComment(){
+            $('.card2').empty();
+            let user = [[${user}]]
+            let comments = [[${comments}]]
+            console.log(comments)
+            for(let i = 0; i < comments.length; i++){
+                let contents = comments[i].contents
+                let username = comments[i].username
+                let modifiedAt = comments[i].modifiedAt
+                let commentId = comments[i].commentId
+                let tempHtml = ``
+                if(user === username){
+                    tempHtml = `<div class="card2">
+                                    <!-- date/name 영역 -->
+                                    <div class="metadata">
+                                        <div class="date">
+                                            ${modifiedAt}
+                                        </div>
+                                        <div class="name">
+                                            ${username}
+                                        </div>
+                                    </div>
+                                    <!-- comment 조회영역-->
+                                    <div class="contents">
+                                        <div id="${commentId}-comments" class="text" >
+                                            ${contents}
+                                        </div>
+                                        <div id="${commentId}-editarea" class="edit">
+                                            <textarea id="${commentId}-textarea" class="te-edit" name="" id="" cols="30" rows="2">${contents}</textarea>
+                                        </div>
+                                        <img src="/images/edit.png" alt="" class="editImg" id="${commentId}-editImg" onclick="editComment(${commentId})">
+                                        <img src="/images/done.png" alt="" class="doneImg" id="${commentId}-doneImg" onclick="doneComment(${commentId})">
+                                        <img src="/images/delete.png" alt="" class="deleteImg" id="${commentId}-deleteImg" onclick="deleteComment(${commentId})">
+                                    </div>
+                                </div>`
+                }else{
+                    tempHtml = `<div class="card2">
+                                    <!-- date/name 영역 -->
+                                    <div class="metadata">
+                                        <div class="date">
+                                            ${modifiedAt}
+                                        </div>
+                                        <div class="name">
+                                            ${username}
+                                        </div>
+                                    </div>
+                                    <!-- comment 조회영역-->
+                                    <div class="contents">
+                                        <div id="${commentId}-contents" class="text">
+                                            ${contents}
+                                        </div>
+                                    </div>
+                                </div>`
+                }
+                $('#cards-box2').append(tempHtml);
+            }
+        }
+        function editComment(id){
+            console.log(id)
+            $('#'+id+"-comments").hide();
+            $('#'+id+"-editImg").hide();
+            $('#'+id+"-deleteImg").hide();
+            $('#'+id+"-editarea").show();
+            $('#'+id+"-doneImg").show();
+
+        }
+
+        function doneComment(id){
+            let contents = $('#'+id+"-textarea").val()
+            let contentsId = [[${data.id}]]
+
+            if (isValidContents(contents) == false) {
+                return;
+            }
+
+            let data = {'contents': contents, 'contentsId': contentsId};
+            $.ajax({
+                type: "PUT",
+                url: "/api/comments/" + id,
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function () {
+                    alert('선택하신 댓글이 수정 되었습니다.');
+                    window.location.reload();
+                }
+            });
+        }
+
+        function deleteComment(id) {
+            if (confirm("정말 삭제하시겠습니까?") === true) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "/api/comments/" + id,
+                    contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                    success: function () {
+                        alert('선택하신 댓글이 삭제 되었습니다.');
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+
+    </script>
+
+    <style>
+        @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+
+        * {
+            font-family: 'Jua', sans-serif !important;
+            list-style: none;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        .edit {
+            display: none;
+            pardding-left: 23px;
+        }
+
+        .wrap {
+            width: 538px;
+            margin: 10px auto;
+            height: 300px;
+        }
+
+        .to-write button {
+            padding: 10px;
+            width: 150px;
+            font-size: 20px;
+            position: relative;
+            margin-left: 450px;
+            margin-top: 100px;
+            margin-bottom: 50px;
+            border-radius: 20px;
+        }
+
+        .background-header {
+            position: fixed;
+            z-index: -1;
+            top: 0px;
+            width: 100%;
+            height: 428px;
+            background-color: #339af0;
+        }
+
+        .background-body {
+            position: fixed;
+            z-index: -1;
+            top: 428px;
+            height: 100%;
+            width: 100%;
+            background-color: #174978;
+        }
+
+        .header {
+            margin-top: 0;
+        }
+
+        .header h2 {
+            /*font-family: 'Noto Sans KR', sans-serif;*/
+            height: 33px;
+            font-size: 42px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 0.79;
+            letter-spacing: -0.5px;
+            text-align: center;
+            color: #ffffff;
+            margin-top: 170px;
+        }
+
+        .header p {
+            margin: 40px auto;
+            width: 217px;
+            height: 48px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.5;
+            letter-spacing: -1.12px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .area-write img {
+            cursor: pointer;
+            position: relative;
+            width: 22.2px;
+            height: 18.7px;
+            bottom: 50px;
+            left: 500px;
+        }
+
+        .card {
+            width: 538px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+        .card2{
+            width: 538px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .card .metadata, .card2 .metadata {
+            position: relative;
+            display: flex;
+            font-family: 'Spoqa Han Sans';
+            font-size: 18px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1;
+            letter-spacing: -0.77px;
+            text-align: left;
+            color: #adb5bd;
+            height: 14px;
+            padding: 10px 23px;
+        }
+
+        .card .metadata .date {
+            position: absolute;
+            right: 20px;
+        }
+        .card2 .metadata .date {
+            position: absolute;
+            right: 20px;
+        }
+
+        .contents {
+            padding: 20px 23px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .contents div.edit {
+            display: none;
+        }
+
+        #cards-box {
+            margin-top: 250px;
+        }
+
+        .card h2 {
+            margin-left: 30px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        #home {
+            text-decoration: none;
+            color: #FFA547;
+            display: inline;
+            text-align: right;
+            font-size: 30px;
+            position: absolute;
+        }
+        textarea.field {
+            width: 502px !important;
+            height: 40px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            border: none;
+            padding: 18px;
+            resize: none;
+        }
+
+        textarea.field::placeholder {
+            width: 216px;
+            height: 16px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1;
+            letter-spacing: -0.96px;
+            text-align: left;
+            color: #868e96;
+        }
+        .comment{
+            position: relative;
+            width: 538px;
+        }
+        .contents{
+            position:relative;
+        }
+
+         .comment img{
+            cursor: pointer;
+            position: absolute;
+            width: 22.2px;
+            height: 18.7px;
+            bottom: 15px;
+            right: 17px;
+        }
+         .card2 img{
+             cursor: pointer;
+             position: absolute;
+             width: 22.2px;
+             height: 18.7px;
+             top:30px;
+             right: 17px;
+         }
+        .card2 img.editImg{
+             right:60px;
+         }
+        .card2 img.doneImg{
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+<div class="background-header">
+
+</div>
+<div class="background-body">
+
+</div>
+<div class="wrap">
+    <a href="/" id="home">Home</a>
+    <div class="header">
+        <h2>항해99 바다 위 대나무숲<br><br>
+            <li id="userlogin">
+                <span th:text="${user}"></span>
+                님!<br><br>
+            </li>
+            맘껏 외치세요 무야호!
+        </h2>
+    </div>
+
+    <div id="cards-box" class="area-read">
+        <div class="card">
+            <!-- date/name 영역 -->
+            <div class="metadata">
+                <div class="date" th:text="${data.modifiedAt}">
+                    October 10, 2020
+                </div>
+                <div class="name" th:text="${data.name}">
+                    anonymous
+                </div>
+            </div>
+            <!-- contents 조회영역-->
+            <h2 th:text="${data.title}">asd</h2>
+            <div class="contents">
+                <div id="1-contents" class="text" th:text="${data.contents}">
+                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
+                </div>
+            </div>
+
+        </div>
+    </div>
+        <div class="comment">
+            <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+                      rows="10"></textarea>
+            <img src="/images/send.png" alt="" onclick="writeComment()">
+        </div>
+    <div id="cards-box2">
+        <div class="card2">
+            <!-- date/name 영역 -->
+            <div class="metadata">
+                <div class="date">
+                    ${modifiedAt}
+                </div>
+                <div class="name">
+                    ${username}
+                </div>
+            </div>
+            <!-- comment 조회영역-->
+            <div class="contents">
+                <div id="1_contents" class="text">
+                    ${contents}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
