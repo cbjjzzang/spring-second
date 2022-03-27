@@ -4,7 +4,9 @@ package com.sparta.myBlog.controller;
 import com.sparta.myBlog.models.Contents;
 import com.sparta.myBlog.repository.ContentsRepository;
 import com.sparta.myBlog.dto.ContentsRequestDto;
+import com.sparta.myBlog.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +34,8 @@ public class ContentsRestController {
 
     // 게시글 생성
     @PostMapping("/api/contents")
-    public Contents createContents(@RequestBody ContentsRequestDto requestDto) {
+    public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        requestDto.setName(userDetails.getUsername());
         Contents Contents = new Contents(requestDto);
         return ContentsRepository.save(Contents);
     }

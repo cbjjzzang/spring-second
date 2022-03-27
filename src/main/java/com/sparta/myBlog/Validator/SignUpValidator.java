@@ -53,5 +53,4 @@ public class SignUpValidator {
     public boolean checkUsernameDuplicate(String username) {
         return userRepository.existsByUsername(username);
     }
-
 }
