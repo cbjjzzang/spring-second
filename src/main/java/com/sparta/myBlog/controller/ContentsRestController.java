@@ -1,7 +1,6 @@
 package com.sparta.myBlog.controller;
 
 import com.sparta.myBlog.models.Contents;
-import com.sparta.myBlog.models.User;
 import com.sparta.myBlog.repository.ContentsRepository;
 import com.sparta.myBlog.dto.ContentsRequestDto;
 import com.sparta.myBlog.security.UserDetailsImpl;
@@ -19,7 +18,7 @@ import java.util.List;
 public class ContentsRestController {
 
     private final ContentsRepository contentsRepository;
-    private final com.sparta.myBlog.service.ContentsService contentsService;
+    private final ContentsService contentsService;
 
     // 게시글 전체 조회
     @GetMapping("/api/contents")

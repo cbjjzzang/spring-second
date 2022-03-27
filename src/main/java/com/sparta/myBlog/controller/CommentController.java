@@ -1,12 +1,10 @@
 package com.sparta.myBlog.controller;
 
-import com.sparta.myBlog.models.Comment;
 import com.sparta.myBlog.dto.CommentRequestDto;
-import com.sparta.myBlog.models.Contents;
+import com.sparta.myBlog.models.Comment;
 import com.sparta.myBlog.repository.CommentRepository;
-import com.sparta.myBlog.repository.ContentsRepository;
-import com.sparta.myBlog.service.CommentService;
 import com.sparta.myBlog.security.UserDetailsImpl;
+import com.sparta.myBlog.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
