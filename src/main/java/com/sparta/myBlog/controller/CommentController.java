@@ -36,6 +36,7 @@ public class CommentController {
     public Long deleteComment(@PathVariable Long id) {
         return commentService.deleteComment(id);
     }
+
     //댓글 수정
     @PutMapping("/api/comments/{id}")
     public Long updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
