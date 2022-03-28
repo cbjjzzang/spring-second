@@ -31,6 +31,7 @@ public class CommentController {
         model.addAttribute("username", userDetails.getUsername());
         return commentRepository.findAllByContentsIdOrderByCreatedAtDesc(id);
     }
+
     //댓글 삭제
     @DeleteMapping("/api/comments/{id}")
     public Long deleteComment(@PathVariable Long id) {

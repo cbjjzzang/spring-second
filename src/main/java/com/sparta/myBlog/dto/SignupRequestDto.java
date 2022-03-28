@@ -1,5 +1,6 @@
 package com.sparta.myBlog.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 
 @Setter
 @Getter
+@AllArgsConstructor
 public class SignupRequestDto {
 
     @NotBlank(message = "아이디는 필수 입력 값입니다.")
@@ -21,4 +23,5 @@ public class SignupRequestDto {
     private String password2;
 
     private String email;
+
 }

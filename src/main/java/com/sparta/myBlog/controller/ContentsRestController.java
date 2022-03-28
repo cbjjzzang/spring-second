@@ -46,7 +46,7 @@ public class ContentsRestController {
         contentsService.update(id, requestDto);
         return id;
     }
-
+    //게시글 삭제
     @DeleteMapping("/api/contents/{id}")
     public Long deleteContents(@PathVariable Long id) {
         contentsRepository.deleteById(id);

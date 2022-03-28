@@ -23,10 +23,10 @@ public class UserService {
     public void registerUser(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
 // 회원 ID 중복 확인
-        Optional<User> found = userRepository.findByUsername(username);
-        if (found.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
-        }
+//        Optional<User> found = userRepository.findByUsername(username);
+//        if (found.isPresent()) {
+//            throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
+//        }
 
         String password = passwordEncoder.encode(requestDto.getPassword());
         String email = requestDto.getEmail();

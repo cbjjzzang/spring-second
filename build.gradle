@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     // Thymeleaf (뷰 템플릿 엔진)
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // validation 정규식 검사
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 }

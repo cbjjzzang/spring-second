@@ -44,6 +44,5 @@ public class ContentsService {
             mv.addObject("user",null );
         }
         return mv;
-
     }
 }
