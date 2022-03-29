@@ -62,6 +62,17 @@
         }
 
         function makeMessage(id, name, title, contents, modifiedAt) {
+            let cnt;
+            $.ajax({
+                type: "GET",
+                url: "/api/contents/" + id,
+                async: false,
+                data: {},
+                success: function (response) {
+                   cnt = response.length;
+                }
+            });
+            console.log(cnt)
             return `<a href="/api/contents/detail?id=${id}">
                         <div class="card">
                             <div class="metadata">
@@ -76,6 +87,7 @@
                             <div class="contents" id="${id}-contents" >
                                ${contents}
                             </div>
+                            <p id="commentCnt">댓글 : ${cnt}</p>
                             </a>
                         </div>`;
         }
@@ -179,6 +191,7 @@
             background-color: #ffffff;
             margin-bottom: 30px;
             padding-bottom: 20px;
+            position: relative;
         }
 
         .card .metadata {
@@ -204,11 +217,10 @@
 
         .card .metadata .name {
             margin-right: 50px;
-
         }
 
         .contents {
-            padding: 0px 23px;
+            padding: 0px 70px 0px 23px;
             word-wrap: break-word;
             word-break: break-all;
         }
@@ -233,11 +245,18 @@
 
         .card h2 {
             margin-left: 30px;
+            word-break:break-all;
+            word-wrap: break-word;
         }
 
         a {
             text-decoration: none;
             color: #000000;
+        }
+        #commentCnt{
+            position:absolute;
+            bottom:0;
+            right: 10px;
         }
     </style>
 </head>

@@ -1,6 +1,8 @@
 package com.sparta.myBlog.controller;
 
+import com.sparta.myBlog.models.Comment;
 import com.sparta.myBlog.models.Contents;
+import com.sparta.myBlog.repository.CommentRepository;
 import com.sparta.myBlog.repository.ContentsRepository;
 import com.sparta.myBlog.dto.ContentsRequestDto;
 import com.sparta.myBlog.security.UserDetailsImpl;
@@ -19,11 +21,16 @@ public class ContentsRestController {
 
     private final ContentsRepository contentsRepository;
     private final ContentsService contentsService;
-
+    private final CommentRepository commentRepository;
     // 게시글 전체 조회
     @GetMapping("/api/contents")
     public List<Contents> getContents() {
         return contentsRepository.findAllByOrderByCreatedAtDesc();
+    }
+    // 게시글에 달린 댓글 개수 조회
+    @GetMapping("/api/contents/{id}")
+    public List<Comment> getComments(@PathVariable Long id) {
+        return commentRepository.findAllByContentsIdOrderByCreatedAtDesc(id);
     }
 
     // 게시글 특정 조회
