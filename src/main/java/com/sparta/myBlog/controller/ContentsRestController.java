@@ -22,11 +22,13 @@ public class ContentsRestController {
     private final ContentsRepository contentsRepository;
     private final ContentsService contentsService;
     private final CommentRepository commentRepository;
+
     // 게시글 전체 조회
     @GetMapping("/api/contents")
     public List<Contents> getContents() {
         return contentsRepository.findAllByOrderByCreatedAtDesc();
     }
+
     // 게시글에 달린 댓글 개수 조회
     @GetMapping("/api/contents/{id}")
     public List<Comment> getComments(@PathVariable Long id) {
