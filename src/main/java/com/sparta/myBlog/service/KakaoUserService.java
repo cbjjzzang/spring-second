@@ -60,7 +60,7 @@ public class KakaoUserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "a1476a38628b8e3c42de71e3e1ddaf01");
-        body.add("redirect_uri", "http://localhost:8080/user/kakao/callback");
+        body.add("redirect_uri", "http://localhost:8080/user/kakao/callback"); //http://localhost:8080/user/kakao/callback
         body.add("code", code);
 
 // HTTP 요청 보내기
@@ -119,18 +119,29 @@ public class KakaoUserService {
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
                 .orElse(null);
         if (kakaoUser == null) {
-            // 회원가입
-            // username: kakao nickname
-            String nickname = kakaoUserInfo.getNickname();
 
-            // password: random UUID 자동 랜덤 문자열 생성
-            String password = UUID.randomUUID().toString();
-            String encodedPassword = passwordEncoder.encode(password);
+            String kakaoEmail = kakaoUserInfo.getEmail();
+            User sameEmailUser = userRepository.findByEmail(kakaoEmail).orElse(null);
+            if(sameEmailUser != null){
+                kakaoUser = sameEmailUser;
+                //기존 회원정보에 카카오 Id 추가
+                //kakaoUser.setUsername(kakaoUserInfo.getNickname());
+                kakaoUser.setKakaoId(kakaoId);
+            }else {
+                // 회원가입
+                // username: kakao nickname
+                String nickname = kakaoUserInfo.getNickname();
 
-            // email: kakao email
-            String email = kakaoUserInfo.getEmail();
+                // password: random UUID 자동 랜덤 문자열 생성
+                String password = UUID.randomUUID().toString();
+                String encodedPassword = passwordEncoder.encode(password);
 
-            kakaoUser = new User(nickname, encodedPassword, email, kakaoId);
+                // email: kakao email
+                String email = kakaoUserInfo.getEmail();
+
+                kakaoUser = new User(nickname, encodedPassword, email, kakaoId);
+
+            }
             userRepository.save(kakaoUser);
         }
         return kakaoUser;
