@@ -33,8 +33,9 @@ public class UserController {
         if(userDetails != null) {
             model.addAttribute("loggedIn", true);
             model.addAttribute("message", "이미 로그인 하셨습니다.");
-        } else
+        } else {
             model.addAttribute("loggedIn", false);
+        }
         return "login";
     }
 
@@ -64,5 +65,4 @@ public class UserController {
         kakaoUserService.kakaoLogin(code);
         return "redirect:/";
     }
-
 }
